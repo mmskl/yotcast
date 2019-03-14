@@ -1,0 +1,50 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>POD TUBE CAST</title>
+        <meta name="description" content="RSS from youtube channel generator">
+        <meta name="author" content="Marcin Moskal">
+
+        <style>
+            body {
+                background-color: gray;
+            }
+            .container {
+                margin: 140px auto 0 auto;
+                text-align: center;
+            }
+            .form {
+                position: center;
+                display: block;
+            }
+            .url {
+                min-width: 360px;
+                margin-bottom: 20px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <h1> PUT HERE CHANNEL URL </h1>
+            <div class="form">
+                <form method="post" action="/channel">
+                    <input class="url" name="url" /> <br />
+                    <input type="submit" value="GO"></input>
+                </form>
+            </div>
+            <h1> PUT HERE YOUTUBE URL </h1>
+            <div class="form">
+                <form method="post" action="/video">
+                    <input class="url" name="url" /> <br />
+                    <input type="submit" value="GO"></input>
+                </form>
+            </div>
+        </div>
+        <script></script>
+    </body>
+</html>
