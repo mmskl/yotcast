@@ -1,16 +1,14 @@
 FROM python:3.7.2-alpine
 
-RUN mkdir /opt/podtubecast
-WORKDIR /opt/podtubecast
-RUN mkdir -p /opt//podtubecast/data
+RUN mkdir /opt/Yotcaster
+WORKDIR /opt/Yotcaster/yotcaster
+RUN mkdir -p /opt/Yotcaster/data
 
-COPY ./ /opt/podtubecast
+COPY ./yotcaster /opt/Yotcaster/yotcaster
+COPY ./requirements.txt /opt/Yotcaster/requirements.txt
+COPY ./supervisord.conf /opt/Yotcaster/supervisord.conf
 
-VOLUME /opt/podtubecast/data
+RUN pip install -r /opt/Yotcaster/requirements.txt
+RUN apk add  ffmpeg supervisor --no-cache
 
-RUN pip install -r requirements.txt
-RUN apk add  ffmpeg --no-cache
-
-ENTRYPOINT ["python", "/opt/podtubecast/podtubecast.py"]
-
-
+ENTRYPOINT ["supervisord", "-n", "-c", "/opt/Yotcaster/supervisord.conf"]
