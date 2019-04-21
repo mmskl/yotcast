@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    build: .
+    # image: python:3.7.2-alpine
+    container_name: "yotcast_app"
+    restart: unless-stopped
+    volumes:
+        #- ./data:/opt/Yotcaster/data
+        - ./:/opt/Yotcaster
+    ports:
+      - "8087:5000"
+    expose:
+      - "80"
+    environment:
+      - APP_DIR=/opt/Yotcaster
