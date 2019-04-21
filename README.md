@@ -7,6 +7,7 @@ Youtube channel to podcast rss translator and converter
 ```
 git clone https://github.com/mmskl/yotcast.git
 cd yotcast
+mkdir data
 docker-compose up -d
 ```
 And visit http://localhost:8087
