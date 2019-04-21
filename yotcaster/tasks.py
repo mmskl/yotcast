@@ -6,7 +6,7 @@ from config import huey
 def download_video(video_id):
     file_path = '{}/data/{}.m4a'.format(environ['APP_DIR'], video_id)
 
-    if not path.exists('data/' + file_path):
+    if not path.exists(file_path):
 
         ydl_opts = {
             'outtmpl': file_path,
