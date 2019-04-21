@@ -2,10 +2,12 @@ from flask import request, render_template, Flask, redirect, url_for, send_file
 from re import match
 import feedparser
 import youtube_dl
-from os import path
+import sys
+from config import huey
+
+from tasks import download_video
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
@@ -56,6 +58,8 @@ def feed(channel_id):
 
         download_url = '{}download/{}'.format(request.url_root, item['yt_videoid'])
 
+        download_video(item['yt_videoid'])
+
         items.append({
             'title': item['title'],
             'audio_url': download_url,
@@ -72,26 +76,10 @@ def feed(channel_id):
 @app.route('/download/<video_id>', methods=['GET'])
 def download(video_id):
 
-    file_path = 'data/{}.m4a'.format(video_id)
 
-    if not path.exists('data/' + file_path):
-
-        ydl_opts = {
-            'outtmpl': file_path,
-            'format': 'm4a/worstaudio/worst',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'm4a',
-                'preferredquality': '128',
-            }],
-        }
-
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download(['https://www.youtube.com/watch?v={}'.format(video_id)])
-
+    file_path = download_video(video_id)
 
     return send_file(open(file_path, 'rb'), mimetype='application/octet-stream')
 
 if __name__ == '__main__':
-      app.run(host='0.0.0.0', port=5000, debug=False)
-
+    app.run(host='0.0.0.0', port=5000, debug=True)
