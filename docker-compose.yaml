@@ -1,16 +1,30 @@
 version: '3'
 services:
-  app:
+  web:
     build: .
-    # image: python:3.7.2-alpine
     container_name: "yotcast_app"
     restart: unless-stopped
     volumes:
-        #- ./data:/opt/Yotcaster/data
+        # - ./data:/opt/Yotcaster/data
         - ./:/opt/Yotcaster
     ports:
       - "8087:5000"
     expose:
-      - "80"
+      - "5000"
+    command: python main.py
+    working_dir: /opt/Yotcaster/yotcaster
     environment:
       - APP_DIR=/opt/Yotcaster
+      - APP_URL=http://localhost:8087
+  worker:
+    build: .
+    container_name: "yotcast_worker"
+    restart: unless-stopped
+    volumes:
+        # - ./data:/opt/Yotcaster/data
+        - ./:/opt/Yotcaster
+    command: ./consumer.sh
+    working_dir: /opt/Yotcaster/yotcaster
+    environment:
+      - APP_DIR=/opt/Yotcaster
+    depends_on: [ web ]
