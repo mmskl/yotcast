@@ -3,7 +3,7 @@ from re import match
 import feedparser
 import youtube_dl
 import sys
-from config import huey
+from config import huey, app_url
 
 from tasks import download_video
 
@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', app_url=app_url)
 
 
 @app.route('/channel', methods=['POST'])
@@ -54,9 +54,14 @@ def feed(channel_id):
     
     
     items = []
-    for item in feed['items']:
 
-        download_url = '{}download/{}'.format(request.url_root, item['yt_videoid'])
+    if app_url:
+        host = app_url
+    else:
+        host = request.url_root
+
+    for item in feed['items']:
+        download_url = '{}download/{}'.format(host, item['yt_videoid'])
 
         download_video(item['yt_videoid'])
 
