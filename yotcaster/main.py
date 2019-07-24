@@ -61,7 +61,7 @@ def feed(channel_id):
         host = request.url_root
 
     for item in feed['items']:
-        download_url = '{}download/{}'.format(host, item['yt_videoid'])
+        download_url = '{}/download/{}'.format(host, item['yt_videoid'])
 
         download_video(item['yt_videoid'])
 
@@ -81,8 +81,7 @@ def feed(channel_id):
 @app.route('/download/<video_id>', methods=['GET'])
 def download(video_id):
 
-
-    file_path = download_video(video_id)
+    file_path = download_video(video_id).get(blocking=True)
 
     return send_file(open(file_path, 'rb'), mimetype='application/octet-stream')
 
