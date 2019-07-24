@@ -10,7 +10,9 @@
 
         <style>
             body {
-                background-color: gray;
+              font-family: Liberation Sans, Arial, sans-serif;
+              background-color: #fffaf7;
+              line-height: 1.3;
             }
             .container {
                 margin: 140px auto 0 auto;
@@ -24,24 +26,26 @@
                 min-width: 360px;
                 margin-bottom: 20px;
             }
+
+
         </style>
 
     </head>
 
     <body>
         <div class="container">
-            <h1> PUT HERE CHANNEL URL </h1>
+            <h1> Channel url </h1>
             <div class="form">
                 <form method="post" action="{{ app_url }}/channel">
                     <input class="url" name="url" /> <br />
-                    <input type="submit" value="GO"></input>
+                    <input type="submit" value="Send"></input>
                 </form>
             </div>
-            <h1> PUT HERE YOUTUBE URL </h1>
+            <h1> Youtube url </h1>
             <div class="form">
                 <form method="post" action="{{ app_url }}/video">
                     <input class="url" name="url" /> <br />
-                    <input type="submit" value="GO"></input>
+                    <input type="submit" value="Send"></input>
                 </form>
             </div>
         </div>
