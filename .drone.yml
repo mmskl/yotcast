@@ -1,0 +1,22 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: docker
+  commands:
+  - docker build . -t yotcaster
+  - docker save yotcaster > /images/yotcaster.tar
+  volumes:
+  - name: out
+    path: /images
+  - name: docker
+    path: /var/run/docker.sock
+
+volumes:
+- name: out
+  host:
+    path: /home/admin/images
+- name: docker
+  host:
+    path: /var/run/docker.sock
